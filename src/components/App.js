@@ -1,10 +1,11 @@
-import './App.css';
+import '../css/App.css';
+import AppRouter from './Router';
+
 
 function App() {
   return (
     <div className="App">
-      <h1>Hello world</h1>
-      <p>yoohoo</p>
+      <AppRouter />
     </div>
   );
 }

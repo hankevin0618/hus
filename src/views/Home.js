@@ -3,7 +3,12 @@ import React from 'react'
 
 const Home = () => {
     return (
-        <div>I'm home</div>
+        <section className="container">
+            <div className="row">
+                <div className="col-md-12">I'm home</div>
+                <button>Login</button>
+            </div>
+        </section>
     )
 }
 

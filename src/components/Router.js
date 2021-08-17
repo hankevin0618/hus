@@ -1,14 +1,17 @@
 import React from 'react'
 import { HashRouter as Router, Route, Switch } from "react-router-dom";
+import Auth from '../views/Auth';
 import Home from '../views/Home';
 
 const AppRouter = () => {
 
     return (
         <Router>
-            <Route exact path="/">
-                <Home />
-            </Route>
+            <Switch>
+                <Route exact path="/">
+                    <Auth />
+                </Route>
+            </Switch>
         </Router>
     )
 }

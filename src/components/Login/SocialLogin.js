@@ -1,16 +1,70 @@
 import React from 'react'
+import { authService, firebaseInstance } from '../../myBase';
 
-const SocialLogin = () => {
+const SocialLogin = ({ isSignIn }) => {
 
-    const onSocialClick = e => {
+
+    const onSocialClick = async (e) => {
         e.preventDefault();
-        alert('social')
+        const { target: { name } } = e;
+        let provider;
+        let process;
+
+        switch (name) {
+            case 'google':
+                provider = new firebaseInstance.auth.GoogleAuthProvider()
+                process = await authService.signInWithPopup(provider)
+                console.log(authService.currentUser)
+                break;
+            case 'facebook':
+
+                break;
+            default:
+                break;
+        }
+
+        if (!isSignIn && process) {
+            // More info page need to show
+
+            let userObj = authService.currentUser;
+            let myPromise = new Promise((myResolve, myReject) => {
+                let data = {
+                    fullName: userObj.displayName,
+                    phoneNumber: userObj.phoneNumber,
+                    email: userObj.email,
+                    createdAt: userObj.metadata.creationTime,
+                    lastSignInTime: userObj.metadata.lastSignInTime,
+                    YOB: null,
+                    state: null,
+                }
+                if (data) {
+                    console.log("Promise worked")
+                    myResolve(data);
+                } else {
+                    myReject("Error in Promise");
+                }
+            })
+
+            myPromise.then(
+                (value) => {
+                    console.log(value)
+                },
+                (error) => {
+                    console.log(error)
+                }
+
+
+            )
+
+
+        }
+
     }
 
     return (
         <div>
-            <button onClick={onSocialClick} className="transparent-button text-dark">Google</button>
-            <button onClick={onSocialClick} className="transparent-button text-dark">Facebook</button>
+            <button name="google" onClick={onSocialClick} className="transparent-button text-dark">Google</button>
+            <button name="facebook" onClick={onSocialClick} className="transparent-button text-dark">Facebook</button>
         </div>
     )
 }

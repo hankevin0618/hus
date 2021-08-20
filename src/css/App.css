@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Anton&family=MonteCarlo&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,500;1,700;1,900&display=swap');
 
+.monte{
+    font-family: 'MonteCarlo' !important;
+}
+
 h1{
     font-family: 'Anton';
 }
@@ -21,7 +25,6 @@ h1{
 }
 
 #login-form{
-    width: 50%;
     min-height: 500px;
     margin: auto;
     background-color: #ffffff30;
@@ -29,7 +32,7 @@ h1{
 }
 
 #login-form form{
-    width: 250px;
+    min-width: 250px;
 }
 
 
@@ -61,5 +64,13 @@ input::placeholder{
 .transparent-button{
     background-color: transparent;
     background-image: none;
-    color:blue;
+    color:#38e2ee;
+}
+
+select{
+    background-color: transparent;
+    border: none;
+    color: white;
+    border-bottom: 2px solid white;
+    padding-bottom: 4px;
 }

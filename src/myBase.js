@@ -8,6 +8,7 @@ import "firebase/database";
 const firebaseConfig = {
     apiKey: "AIzaSyDrICxenlVfwbaIN-KR2dE_MoYrzY1IRl8",
     authDomain: "hus-fb.firebaseapp.com",
+    databaseURL: "https://hus-fb-default-rtdb.asia-southeast1.firebasedatabase.app",
     projectId: "hus-fb",
     storageBucket: "hus-fb.appspot.com",
     messagingSenderId: "282388248517",

@@ -8,7 +8,7 @@ import AppRouter from './Router';
 // 
 
 function App() {
-
+  console.log(authService.currentUser)
   const [loading, setLoading] = useState(true);
   const [userObj, setUserObj] = useState(null);
 

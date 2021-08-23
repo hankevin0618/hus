@@ -1,7 +1,7 @@
 import React from 'react'
 import { authService, firebaseInstance } from '../../myBase';
 
-const SocialLogin = ({ isSignIn }) => {
+const SocialLogin = ({ isSignIn, setShowMoreInfo }) => {
 
 
     const onSocialClick = async (e) => {
@@ -14,7 +14,6 @@ const SocialLogin = ({ isSignIn }) => {
             case 'google':
                 provider = new firebaseInstance.auth.GoogleAuthProvider()
                 process = await authService.signInWithPopup(provider)
-                console.log(authService.currentUser)
                 break;
             case 'facebook':
 
@@ -25,37 +24,7 @@ const SocialLogin = ({ isSignIn }) => {
 
         if (!isSignIn && process) {
             // More info page need to show
-
-            let userObj = authService.currentUser;
-            let myPromise = new Promise((myResolve, myReject) => {
-                let data = {
-                    fullName: userObj.displayName,
-                    phoneNumber: userObj.phoneNumber,
-                    email: userObj.email,
-                    createdAt: userObj.metadata.creationTime,
-                    lastSignInTime: userObj.metadata.lastSignInTime,
-                    YOB: null,
-                    state: null,
-                }
-                if (data) {
-                    console.log("Promise worked")
-                    myResolve(data);
-                } else {
-                    myReject("Error in Promise");
-                }
-            })
-
-            myPromise.then(
-                (value) => {
-                    console.log(value)
-                },
-                (error) => {
-                    console.log(error)
-                }
-
-
-            )
-
+            setShowMoreInfo(true)
 
         }
 

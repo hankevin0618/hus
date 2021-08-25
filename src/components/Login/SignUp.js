@@ -47,17 +47,16 @@ const SignUp = () => {
     }
 
     return (
-        <form onSubmit={onSubmit} className="" >
+        <form onSubmit={onSubmit} className="row" >
             <div className="my-3">
                 <h4 style={{ fontWeight: 'lighter' }}>Become a Member!</h4>
             </div>
-            <div>
-                <div className="col-12">
-                    <input required type="text" name="email" placeholder="Email" className="m-3 col-md-12" onChange={onChange} />
-                    <input required type="password" name="password" placeholder="Password" className="m-3 col-md-12" onChange={onChange} />
-                    <input required type="text" name="fullName" placeholder="Full Name" className="m-3 col-md-12" onChange={onChange} />
-                </div>
-                <button type="submit" name="submit" className="my-3 col-4">Sign Up</button>
+            <div className="d-grid mx-auto col-md-6 col-xl-5" >
+                <input required type="text" name="email" placeholder="Email" className="m-3" onChange={onChange} />
+                <input required type="password" name="password" placeholder="Password" className="m-3 " onChange={onChange} />
+                <input required type="text" name="fullName" placeholder="Full Name" className="m-3 " onChange={onChange} />
+
+                <button type="submit" name="submit" className="my-3 col-7 d-block mx-auto">Sign Up</button>
             </div>
         </form>
     )

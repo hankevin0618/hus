@@ -21,6 +21,9 @@ const Home = ({ isLoggedIn }) => {
     const onPostClick = (e) => {
         e.preventDefault();
         setPopPost(true)
+        if (!isLoggedIn) {
+            alert('Please login first')
+        }
     }
 
     return (
@@ -32,7 +35,7 @@ const Home = ({ isLoggedIn }) => {
                         <button onClick={onPostClick}>What's on your mind?</button>
                         <div id="dark-bg"></div>
                         {
-                            popPost &&
+                            popPost && isLoggedIn &&
                             <>
                                 <PostFactory setPopPost={setPopPost} />
                             </>

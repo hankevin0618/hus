@@ -74,3 +74,38 @@ select{
     border-bottom: 2px solid white;
     padding-bottom: 4px;
 }
+
+/* Nav */
+
+header nav ul li{
+    list-style: none;
+    font-family: 'Roboto';
+}
+
+header nav{
+    box-shadow: 1px 4px 11px 1px #00000012;
+    margin-bottom: 30px;
+}
+
+/* popup */
+
+.on-popup{
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    background-color: #000000b5;
+    top: 0;
+    left: 0;
+    transition: 0.5s;
+}
+
+#post-popup{
+    width: 700px;
+    height: 500px;
+    position: fixed;
+    background-color: white;
+    top: 50px;
+    left:50%;
+    transform: translate(-50%, 0);
+    box-shadow: 2px 1px 9px 5px #00000045;
+}

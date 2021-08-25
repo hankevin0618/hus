@@ -1,7 +1,7 @@
 import React from 'react';
 import LoginForm from '../components/Login/LoginForm';
 
-const Auth = () => {
+const Auth = ({ isLoggedIn }) => {
 
     return (
         <section id="auth" className="container-fluid">

@@ -9,6 +9,9 @@ const AppRouter = ({ isLoggedIn, userObj }) => {
         <Router>
             <Switch>
                 <Route exact path="/">
+                    <Home />
+                </Route>
+                <Route exact path="/login">
                     <Auth />
                 </Route>
             </Switch>

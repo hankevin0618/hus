@@ -1,7 +1,7 @@
 import React from 'react'
 import { authService, firebaseInstance } from '../../myBase';
 
-const SocialLogin = ({ isSignIn, setShowMoreInfo }) => {
+const SocialLogin = () => {
 
 
     const onSocialClick = async (e) => {
@@ -21,13 +21,6 @@ const SocialLogin = ({ isSignIn, setShowMoreInfo }) => {
             default:
                 break;
         }
-
-        if (!isSignIn && process) {
-            // More info page need to show
-            setShowMoreInfo(true)
-
-        }
-
     }
 
     return (

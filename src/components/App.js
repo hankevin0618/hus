@@ -3,12 +3,7 @@ import '../css/App.css';
 import { authService, realtimeDB } from '../myBase';
 import AppRouter from './Router';
 
-// for logged in users,
-// update the last logged in time
-// 
-
 function App() {
-  console.log(authService.currentUser)
   const [loading, setLoading] = useState(true);
   const [userObj, setUserObj] = useState(null);
 

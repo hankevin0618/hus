@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 
 const Home = () => {
@@ -6,7 +7,7 @@ const Home = () => {
         <section className="container">
             <div className="row">
                 <div className="col-md-12">I'm home</div>
-                <button>Login</button>
+                <Link to="/login">Login</Link>
             </div>
         </section>
     )

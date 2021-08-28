@@ -36,7 +36,10 @@ const SignUp = () => {
             password,
         );
         if (data) {
-            realtimeDB.ref('users/' + authService.currentUser.uid).set({
+            await authService.currentUser.updateProfile({
+                displayName: fullName
+            })
+            await realtimeDB.ref('users/' + authService.currentUser.uid).set({
                 email,
                 fullName,
                 createdAt: authService.currentUser.metadata.creationTime,

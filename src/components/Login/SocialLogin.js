@@ -1,5 +1,5 @@
 import React from 'react'
-import { authService, firebaseInstance } from '../../myBase';
+import { authService, firebaseInstance, realtimeDB } from '../../myBase';
 
 const SocialLogin = () => {
 
@@ -16,10 +16,19 @@ const SocialLogin = () => {
                 process = await authService.signInWithPopup(provider)
                 break;
             case 'facebook':
-
+                alert('Not yet implemented')
                 break;
             default:
                 break;
+        }
+        if (process) {
+            await realtimeDB.ref('users/' + authService.currentUser.uid).update({
+                email: authService.currentUser.email,
+                fullName: authService.currentUser.displayName,
+                createdAt: authService.currentUser.metadata.creationTime,
+                lastSignInTime: authService.currentUser.metadata.lastSignInTime
+            })
+
         }
     }
 

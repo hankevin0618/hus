@@ -26,10 +26,15 @@ const PostFactory = ({ setPopPost }) => {
 
     const onSubmit = async (e) => {
         e.preventDefault()
+        let authorEmail;
 
+        await realtimeDB.ref('users' + authService.currentUser.uid).on('value', (snapshot) => {
+            console.log(snapshot.val())
+        })
         let data = {
             url,
             title,
+            authorEmail: authorEmail,
             author: authService.currentUser.displayName,
             authorID: authService.currentUser.uid,
             content,

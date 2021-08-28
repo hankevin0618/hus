@@ -5,6 +5,7 @@ const PostFactory = ({ setPopPost }) => {
     const [url, setURL] = useState(null)
     const [title, setTitle] = useState(null)
     const [content, setContent] = useState(null)
+    const [authorEmail, setAuthorEmail] = useState(null)
     const onChange = (e) => {
         e.preventDefault();
         const { target: { name } } = e;
@@ -26,15 +27,15 @@ const PostFactory = ({ setPopPost }) => {
 
     const onSubmit = async (e) => {
         e.preventDefault()
-        let authorEmail;
 
-        await realtimeDB.ref('users' + authService.currentUser.uid).on('value', (snapshot) => {
-            console.log(snapshot.val())
+        await realtimeDB.ref('users/' + authService.currentUser.uid).on('value', (snapshot) => {
+            let data = snapshot.val().email
+            setAuthorEmail(data)
         })
         let data = {
             url,
             title,
-            authorEmail: authorEmail,
+            authorEmail,
             author: authService.currentUser.displayName,
             authorID: authService.currentUser.uid,
             content,
@@ -47,6 +48,7 @@ const PostFactory = ({ setPopPost }) => {
             await fbFireStore.collection('post').doc(postID).set(data)
             alert('Post uploaded successfully')
             setPopPost(false)
+            window.location.reload()
         } catch (error) {
             console.log(error.message)
         }

@@ -10,7 +10,7 @@ const Header = ({ isLoggedIn }) => {
         <header className="row">
             <h1 className="text-center mt-5">HUS</h1>
             <nav className="col-12 d-md-flex mt-3 justify-content-center">
-                <ul className="d-md-flex">
+                <ul className="d-md-flex my-0">
                     <li className="mx-5 p-2" >National</li>
                     <li className="mx-5 p-2" >International</li>
                     <li className="mx-5 p-2" >Sports</li>
@@ -18,8 +18,8 @@ const Header = ({ isLoggedIn }) => {
                     <li className="mx-5 p-2" >Entertainment</li>
                 </ul>
                 {isLoggedIn
-                    ? <button onClick={onLogout}>Logout</button>
-                    : <Link to="/login" className="p-2" >Login</Link>
+                    ? <button onClick={onLogout} className="transparent-button">Logout</button>
+                    : <Link to="/login" className="p-2 login-button" >Login</Link>
                 }
 
             </nav>

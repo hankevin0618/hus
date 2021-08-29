@@ -43,7 +43,6 @@ const PostFactory = ({ setPopPost }) => {
         }
 
         try {
-            // 이제 post는 firestore에 잘 올라가니까, 이걸 읽고 home 에서 feed 로 보여주는걸 하면 됌
             let postID = authService.currentUser.uid + Date.now()
             await fbFireStore.collection('post').doc(postID).set(data)
             alert('Post uploaded successfully')

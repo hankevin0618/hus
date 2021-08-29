@@ -26,13 +26,19 @@ const Home = ({ isLoggedIn }) => {
         }
     }
 
+    // SUNDAY CODING
+
     return (
         <section className="container-fluid">
             <div className="row">
-                <div className="col-md-3 border">left panel</div>
+                <div className="col-md-3">
+                    {/* left panel */}
+                </div>
                 <div className="col-md-6">
-                    <div className="text-center py-3" style={{ backgroundColor: 'grey' }}>
-                        <button onClick={onPostClick}>What's on your mind?</button>
+                    <div className="text-center py-3" >
+                        <div id="post-button">
+                            <button onClick={onPostClick} className="transparent-button text-dark">What's on your mind?</button>
+                        </div>
                         <div id="dark-bg"></div>
                         {
                             popPost && isLoggedIn &&
@@ -44,8 +50,8 @@ const Home = ({ isLoggedIn }) => {
 
                     <Posts />
                 </div>
-                <div className="col-md-3 border">
-                    right panel
+                <div className="col-md-3">
+                    {/* right panel */}
                 </div>
             </div>
         </section>

@@ -87,6 +87,16 @@ header nav{
     margin-bottom: 30px;
 }
 
+.login-button{
+    text-decoration: none;
+    color: #38e2ee;
+    font-weight: bold;
+}
+
+.login-button:hover{
+    color: #38e2ee;
+}
+
 /* popup */
 
 .on-popup{
@@ -108,4 +118,27 @@ header nav{
     left:50%;
     transform: translate(-50%, 0);
     box-shadow: 2px 1px 9px 5px #00000045;
+}
+
+/* post */
+#post-button{
+    width: 50%;
+    display: block;
+    margin: auto;
+    box-shadow: 1px 3px 4px 0px #00000030;
+    border-radius: 9px;
+    border: 1px solid #0000001c;
+}
+
+
+
+.post-card{
+    background-color: #fcfcfc;
+    box-shadow: 3px 3px 5px 1px #0000001f;
+    font-family: 'Roboto';
+}
+
+.post-card h3{
+    text-transform: uppercase;
+    
 }

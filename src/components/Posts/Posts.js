@@ -4,7 +4,7 @@ import { authService, fbFireStore } from "../../myBase";
 const Posts = () => {
     const [loading, setLoading] = useState(true)
     const [posts, setPosts] = useState(null)
-
+    let postKey = 0;
     const getPosts = async () => {
         try {
             let getPosts = await fbFireStore.collection('post').get()
@@ -42,16 +42,43 @@ const Posts = () => {
         }
 
         return (
-            <div>
-                <h3>{title}</h3>
-                <p>url: {url}</p>
-                <p>Author: {author}</p>
-                <p>Content: {content}</p>
-                <p>Date Created: {date}</p>
-                {
-                    checkAuthor && <button onClick={OnDelete}>Delete</button>
+            <div className="border p-3 my-3 post-card">
+                <div className="row">
+                    <div className="col-md-7">
+                        <h4>{title}</h4>
+                        {/* <p>url: {url}</p> */}
 
-                }
+                    </div>
+                    <div className="col-md-5">
+                        <div className="" style={{ float: 'right' }}>
+                            {
+                                checkAuthor && <button onClick={OnDelete} className="transparent-button" style={{ color: 'red' }}>Delete</button>
+
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="border col-md-6" style={{ minHeight: '300px' }}>
+                        URL here
+                    </div>
+                    <div className="col-md-6">
+                        <div style={{ fontSize: 'small' }}>
+                            <p className="m-0">{author}</p>
+                            <p>Date Created: {date}</p>
+                        </div>
+                        <p style={{ fontWeight: 'bold' }}>"{content}"</p>
+                        <p>Top 3 comments</p>
+                        <button className="transparent-button" onClick={() => alert('Not implemented')}>View More</button>
+                    </div>
+                </div>
+                <div className="col-md-12">
+
+
+                </div>
+
+
+
             </div>
         )
     }
@@ -70,8 +97,9 @@ const Posts = () => {
                 :
 
                 posts.map((e) => {
+                    postKey++;
                     return (
-                        <CreatePost key={e.postID} url={e.url} title={e.title} authorID={e.authorID} content={e.content} author={e.author} postID={e.postID} createdDate={e.createdDate} />
+                        <CreatePost key={postKey} id={e.postID} url={e.url} title={e.title} authorID={e.authorID} content={e.content} author={e.author} postID={e.postID} createdDate={e.createdDate} />
                     )
                 })
 

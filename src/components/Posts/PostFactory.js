@@ -3,9 +3,10 @@ import { authService, fbFireStore, realtimeDB } from '../../myBase'
 
 const PostFactory = ({ setPopPost }) => {
     const [url, setURL] = useState(null)
-    const [title, setTitle] = useState(null)
-    const [content, setContent] = useState(null)
+    const [comment, setComment] = useState(null)
     const [authorEmail, setAuthorEmail] = useState(null)
+    const [upAndDown, setUpAndDown] = useState('up')
+
     const onChange = (e) => {
         e.preventDefault();
         const { target: { name } } = e;
@@ -14,11 +15,8 @@ const PostFactory = ({ setPopPost }) => {
             case 'url':
                 setURL(value)
                 break;
-            case 'title':
-                setTitle(value)
-                break;
-            case 'content':
-                setContent(value)
+            case 'comment':
+                setComment(value)
                 break;
             default:
                 break;
@@ -34,11 +32,13 @@ const PostFactory = ({ setPopPost }) => {
         })
         let data = {
             url,
-            title,
             authorEmail,
             author: authService.currentUser.displayName,
             authorID: authService.currentUser.uid,
-            content,
+            comment,
+            up: 0,
+            down: 0,
+            upAndDown,
             createdDate: Date.now()
         }
 
@@ -56,17 +56,55 @@ const PostFactory = ({ setPopPost }) => {
 
     }
 
+    const onUpAndDown = (e) => {
+        e.preventDefault();
+
+        const { target: { name } } = e;
+
+
+        switch (name) {
+            case "up":
+                try {
+                    document.getElementById('up').classList.add('active-white')
+                    document.getElementById('down').classList.remove('active-white')
+                    setUpAndDown('up')
+                } catch (error) {
+                    console.log(error)
+                }
+                break;
+
+            case "down":
+                try {
+                    document.getElementById('down').classList.add('active-white')
+                    document.getElementById('up').classList.remove('active-white')
+                    setUpAndDown('down')
+                } catch (error) {
+                    console.log(error)
+                }
+                break;
+
+            default:
+                break;
+        }
+    }
+
 
     return (
-        <div id="post-popup" className="row" style={{ backgroundColor: '#151515' }}>
-            <div className="col-12 mt-3 text-white">
-                <button className="transparent-button" style={{ float: 'right' }} onClick={() => setPopPost(false)}>Close</button>
-                <h3 className="mt-5">Post Here</h3>
+        <div id="post-field" className="row">
+            <div className="col-12 mt-3">
                 <form onSubmit={onSubmit}>
-                    <input required type="text" onChange={onChange} name="url" placeholder="url" />
-                    <input required type="text" onChange={onChange} name="title" placeholder="title" />
-                    <input required type="text" onChange={onChange} name="content" placeholder="content" />
-                    <button name="submit">Subimt</button>
+                    <input required type="text" onChange={onChange} name="url" placeholder="Drag & Drop the artilce"
+                        style={{ padding: '30px', borderRadius: '8px' }}
+                    />
+                    <div className="d-grid mt-3">
+                        <input required type="text" onChange={onChange} name="comment" placeholder="comment" />
+                        <div className="d-flex">
+                            <button id="up" name="up" className="transparent-button active-white" onClick={onUpAndDown} style={{ color: 'red' }}>AGREE</button>
+                            <button id="down" name="down" className="transparent-button" onClick={onUpAndDown} style={{ color: 'blue' }}>DISAGREE</button>
+
+                        </div>
+                    </div>
+                    <button name="submit" className="transparent-button">Post</button>
                 </form>
             </div>
         </div>

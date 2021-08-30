@@ -109,20 +109,17 @@ header nav{
     transition: 0.5s;
 }
 
-#post-popup{
-    width: 700px;
-    height: 500px;
-    position: fixed;
-    background-color: white;
-    top: 50px;
-    left:50%;
-    transform: translate(-50%, 0);
-    box-shadow: 2px 1px 9px 5px #00000045;
+#post-field input::placeholder{
+    color: rgba(56, 56, 56, 0.514);
+}
+
+#post-field input{
+    border: 1px solid rgba(0, 0, 0, 0.185);
 }
 
 /* post */
 #post-button{
-    width: 50%;
+    width: 70%;
     display: block;
     margin: auto;
     box-shadow: 1px 3px 4px 0px #00000030;
@@ -141,4 +138,12 @@ header nav{
 .post-card h3{
     text-transform: uppercase;
     
+}
+
+.active-white{
+    background-color: orange;
+}
+
+.active-white button{
+    color:white !important;
 }

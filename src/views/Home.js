@@ -5,14 +5,10 @@ import Posts from '../components/Posts/Posts';
 
 const Home = ({ isLoggedIn }) => {
     const [popPost, setPopPost] = useState(false)
+
     useEffect(() => {
         if (isLoggedIn) {
-            if (popPost) {
-                document.querySelector('#dark-bg').classList.add('on-popup')
-            } else {
-                document.querySelector('#dark-bg').classList.remove('on-popup')
 
-            }
         }
 
     }, [popPost])
@@ -20,13 +16,12 @@ const Home = ({ isLoggedIn }) => {
 
     const onPostClick = (e) => {
         e.preventDefault();
-        setPopPost(true)
+        setPopPost(!popPost)
         if (!isLoggedIn) {
             alert('Please login first')
         }
     }
 
-    // SUNDAY CODING
 
     return (
         <section className="container-fluid">
@@ -38,14 +33,13 @@ const Home = ({ isLoggedIn }) => {
                     <div className="text-center py-3" >
                         <div id="post-button">
                             <button onClick={onPostClick} className="transparent-button text-dark">What's on your mind?</button>
+                            {
+                                popPost && isLoggedIn &&
+                                <>
+                                    <PostFactory setPopPost={setPopPost} />
+                                </>
+                            }
                         </div>
-                        <div id="dark-bg"></div>
-                        {
-                            popPost && isLoggedIn &&
-                            <>
-                                <PostFactory setPopPost={setPopPost} />
-                            </>
-                        }
                     </div>
 
                     <Posts />

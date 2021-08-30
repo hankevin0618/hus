@@ -14,9 +14,12 @@ const Posts = () => {
                     postID: doc.id,
                     author: doc.data().author,
                     authorID: doc.data().authorID,
-                    content: doc.data().content,
+                    comment: doc.data().comment,
                     createdDate: doc.data().createdDate,
                     title: doc.data().title,
+                    up: doc.data().up,
+                    down: doc.data().down,
+                    upAndDown: doc.data().upAndDown,
                     url: doc.data().url
                 }
                 tempArray.push(data)
@@ -29,16 +32,23 @@ const Posts = () => {
     }
 
     const OnDelete = (e) => {
+        e.preventDefault();
         if (window.confirm("Really Delete?")) {
             alert('Not implemented yet')
         }
     }
 
-    const CreatePost = ({ title, author, content, url, createdDate, authorID }) => {
+    const CreatePost = ({ title, author, comment, url, up, down, upAndDown, createdDate, authorID }) => {
         let date = new Date(createdDate).toLocaleDateString("en-US")
         let checkAuthor = false;
         if (authService.currentUser) {
             checkAuthor = Boolean(authorID === authService.currentUser.uid)
+        }
+        // Add author's up or down
+        if (upAndDown === 'up') {
+            up++;
+        } else {
+            down++;
         }
 
         return (
@@ -53,7 +63,6 @@ const Posts = () => {
                         <div className="" style={{ float: 'right' }}>
                             {
                                 checkAuthor && <button onClick={OnDelete} className="transparent-button" style={{ color: 'red' }}>Delete</button>
-
                             }
                         </div>
                     </div>
@@ -67,8 +76,12 @@ const Posts = () => {
                             <p className="m-0">{author}</p>
                             <p>Date Created: {date}</p>
                         </div>
-                        <p style={{ fontWeight: 'bold' }}>"{content}"</p>
+                        <div>
+                            <p>Agree: {up}</p>
+                            <p>Disagree: {down}</p>
+                        </div>
                         <p>Top 3 comments</p>
+                        <p style={{ fontWeight: 'bold' }}>"{comment}"</p>
                         <button className="transparent-button" onClick={() => alert('Not implemented')}>View More</button>
                     </div>
                 </div>
@@ -99,7 +112,20 @@ const Posts = () => {
                 posts.map((e) => {
                     postKey++;
                     return (
-                        <CreatePost key={postKey} id={e.postID} url={e.url} title={e.title} authorID={e.authorID} content={e.content} author={e.author} postID={e.postID} createdDate={e.createdDate} />
+                        <CreatePost
+                            key={postKey}
+                            id={e.postID}
+                            url={e.url}
+                            title={e.title}
+                            authorID={e.authorID}
+                            comment={e.comment}
+                            author={e.author}
+                            postID={e.postID}
+                            createdDate={e.createdDate}
+                            up={e.up}
+                            down={e.down}
+                            upAndDown={e.upAndDown}
+                        />
                     )
                 })
 

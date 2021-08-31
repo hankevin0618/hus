@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { authService, fbFireStore } from "../../myBase";
 import { LinkPreview } from '@dhaiwat10/react-link-preview';
+import { Link } from "react-router-dom";
 
 const Posts = () => {
     const [loading, setLoading] = useState(true)
@@ -24,6 +25,9 @@ const Posts = () => {
                     url: doc.data().url
                 }
                 tempArray.push(data)
+                tempArray.sort((a, b) => {
+                    return b.createdDate - a.createdDate
+                })
             })
             setPosts(tempArray)
             setLoading(false)
@@ -39,7 +43,7 @@ const Posts = () => {
         }
     }
 
-    const CreatePost = ({ title, author, comment, url, up, down, upAndDown, createdDate, authorID }) => {
+    const CreatePost = ({ author, comment, url, up, down, upAndDown, createdDate, authorID, postID, comment_author }) => {
         let date = new Date(createdDate).toLocaleDateString("en-US")
         let checkAuthor = false;
         if (authService.currentUser) {
@@ -55,9 +59,6 @@ const Posts = () => {
         return (
             <div className="border p-3 my-3 post-card">
                 <div className="row">
-                    <div className="col-md-7">
-                        <h4>{title}</h4>
-                    </div>
                     <div className="col-md-5">
                         <div className="" style={{ float: 'right' }}>
                             {
@@ -79,9 +80,12 @@ const Posts = () => {
                             <p>Agree: {up}</p>
                             <p>Disagree: {down}</p>
                         </div>
-                        <p>Top 3 comments</p>
-                        <p style={{ fontWeight: 'bold' }}>"{comment}"</p>
-                        <button className="transparent-button" onClick={() => alert('Not implemented')}>View More</button>
+                        <p>Top comment</p>
+                        <div className="comment-box">
+                            <p style={{ fontSize: 'small', float: 'right' }}>Author: {comment_author}</p>
+                            <p style={{ fontWeight: 'bold' }}>"{comment}"</p>
+                        </div>
+                        <Link to={`/post/${postID}`} >View More</Link>
                     </div>
                 </div>
                 <div className="col-md-12">
@@ -110,6 +114,10 @@ const Posts = () => {
 
                 posts.map((e) => {
                     postKey++;
+
+                    e.comment.sort((a, b) => { return a.c_up - b.c_up })
+                    let topComment = e.comment[0].text
+                    let c_author_name = e.comment[0].c_author_name;
                     return (
                         <CreatePost
                             key={postKey}
@@ -117,7 +125,8 @@ const Posts = () => {
                             url={e.url}
                             title={e.title}
                             authorID={e.authorID}
-                            comment={e.comment}
+                            comment={topComment}
+                            comment_author={c_author_name}
                             author={e.author}
                             postID={e.postID}
                             createdDate={e.createdDate}

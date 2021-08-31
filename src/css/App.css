@@ -147,3 +147,11 @@ header nav{
 .active-white button{
     color:white !important;
 }
+
+/* Comment */
+
+.comment-box{
+    background-color: #f4f4f4;
+    padding: 15px;
+    align-items: center;
+}

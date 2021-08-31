@@ -6,13 +6,6 @@ import Posts from '../components/Posts/Posts';
 const Home = ({ isLoggedIn }) => {
     const [popPost, setPopPost] = useState(false)
 
-    useEffect(() => {
-        if (isLoggedIn) {
-
-        }
-
-    }, [popPost])
-
 
     const onPostClick = (e) => {
         e.preventDefault();

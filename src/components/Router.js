@@ -3,6 +3,7 @@ import { HashRouter as Router, Redirect, Route, Switch } from "react-router-dom"
 import Auth from '../views/Auth';
 import Home from '../views/Home';
 import Header from './Header';
+import InnerPost from './Posts/InnerPost';
 
 const AppRouter = ({ isLoggedIn, userObj }) => {
 
@@ -16,6 +17,10 @@ const AppRouter = ({ isLoggedIn, userObj }) => {
                 <Route exact path="/login">
                     <Auth isLoggedIn={isLoggedIn} />
                     {isLoggedIn && <Redirect to="/" />}
+                </Route>
+                <Route path="/post/:id">
+                    <Header isLoggedIn={isLoggedIn} />
+                    <InnerPost />
                 </Route>
             </Switch>
         </Router>

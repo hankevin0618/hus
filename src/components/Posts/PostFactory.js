@@ -36,7 +36,7 @@ const PostFactory = ({ setPopPost }) => {
             authorEmail,
             author: authService.currentUser.displayName,
             authorID: authService.currentUser.uid,
-            comment,
+            comment: [{ c_author_name: authService.currentUser.displayName, c_authorID: authService.currentUser.uid, text: comment, c_up: 0, c_down: 0, c_id: "C_" + authService.currentUser.uid + Date.now() }],
             up: 0,
             down: 0,
             upAndDown,

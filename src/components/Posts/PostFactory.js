@@ -1,3 +1,4 @@
+import { LinkPreview } from "@dhaiwat10/react-link-preview"
 import { useState } from "react"
 import { authService, fbFireStore, realtimeDB } from '../../myBase'
 
@@ -91,9 +92,15 @@ const PostFactory = ({ setPopPost }) => {
 
     return (
         <div id="post-field" className="row">
+            <div>
+                {url && url !== "" &&
+                    <LinkPreview url={url} />
+
+                }
+            </div>
             <div className="col-12 mt-3">
                 <form onSubmit={onSubmit}>
-                    <input required type="text" onChange={onChange} name="url" placeholder="Drag & Drop the artilce"
+                    <input required type="text" onChange={onChange} name="url" placeholder="Drag & Drop the article"
                         style={{ padding: '30px', borderRadius: '8px' }}
                     />
                     <div className="d-grid mt-3">

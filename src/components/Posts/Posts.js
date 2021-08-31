@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { authService, fbFireStore } from "../../myBase";
+import { LinkPreview } from '@dhaiwat10/react-link-preview';
 
 const Posts = () => {
     const [loading, setLoading] = useState(true)
@@ -56,8 +57,6 @@ const Posts = () => {
                 <div className="row">
                     <div className="col-md-7">
                         <h4>{title}</h4>
-                        {/* <p>url: {url}</p> */}
-
                     </div>
                     <div className="col-md-5">
                         <div className="" style={{ float: 'right' }}>
@@ -69,7 +68,7 @@ const Posts = () => {
                 </div>
                 <div className="row">
                     <div className="border col-md-6" style={{ minHeight: '300px' }}>
-                        URL here
+                        <LinkPreview url={url} />;
                     </div>
                     <div className="col-md-6">
                         <div style={{ fontSize: 'small' }}>

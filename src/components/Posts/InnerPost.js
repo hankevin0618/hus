@@ -2,6 +2,7 @@ import { useParams } from "react-router";
 import { LinkPreview } from '@dhaiwat10/react-link-preview';
 import { fbFireStore } from "../../myBase";
 import { useEffect, useState } from "react";
+import CommentSection from "./CommentSection";
 
 const InnerPost = () => {
 
@@ -33,20 +34,32 @@ const InnerPost = () => {
                             <p>Date Created: {postData.date}</p>
                         </div>
                         <div>
-                            <p>Agree: {postData.up}</p>
-                            <p>Disagree: {postData.down}</p>
+                            <div className="d-flex">
+                                <p>Agree: {postData.up}</p>
+                                {/* Need to check whether this person already voted */}
+                                <button className="mx-3 tr">+</button>
+                            </div>
+                            <div className="d-flex">
+                                <p>Disagree: {postData.down}</p>
+                                <button className="mx-3 tr">-</button>
+
+                            </div>
                         </div>
                         <div className="mt-5">
                             <p style={{ fontWeight: 'bold', textAlign: 'center' }}>Best Comment</p>
                             {
                                 postData.comment.map((element, index) => {
-                                    console.log(element)
+                                    // console.log(element)
                                     return (
                                         <div key={index} className="comment-box d-flex">
                                             <div className="col-md-8">
                                                 <p>Author: {element.c_author_name}</p>
-                                                <p style={{ fontWeight: 'bold' }} >"{element.text}"</p>
-                                                <p>up: {element.c_up} / down: {element.c_down}</p>
+                                                <div>
+                                                    <p style={{ fontWeight: 'bold' }} >"{element.text}"</p>
+                                                </div>
+                                                <div>
+                                                    <p>up: {element.c_up} / down: {element.c_down}</p>
+                                                </div>
 
                                             </div>
                                             <div className="col-md-4">
@@ -60,8 +73,8 @@ const InnerPost = () => {
                         </div>
                     </div>
                 </div>
-                <div className="col-md-10 mt-4 d-block mx-auto border">
-                    comment here
+                <div className="col-md-10 mt-4 d-block mx-auto">
+                    <CommentSection postID={postID} />
                 </div>
             </>
         )

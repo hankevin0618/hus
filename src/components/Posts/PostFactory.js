@@ -26,28 +26,23 @@ const PostFactory = ({ setPopPost }) => {
 
     const onSubmit = async (e) => {
         e.preventDefault()
-
-        await realtimeDB.ref('users/' + authService.currentUser.uid).on('value', (snapshot) => {
-            let data = snapshot.val().email
-            setAuthorEmail(data)
-        })
-        let data = {
-            url,
-            authorEmail,
-            author: authService.currentUser.displayName,
-            authorID: authService.currentUser.uid,
-            comment: [{ c_author_name: authService.currentUser.displayName, c_authorID: authService.currentUser.uid, text: comment, c_up: 0, c_down: 0, c_id: "C_" + authService.currentUser.uid + Date.now() }],
-            up: 0,
-            down: 0,
-            upAndDown,
-            createdDate: Date.now()
-        }
-
         try {
+            let data = {
+                url,
+                authorEmail: authService.currentUser.email,
+                author: authService.currentUser.displayName,
+                authorID: authService.currentUser.uid,
+                comment: [{ c_author_name: authService.currentUser.displayName, c_authorID: authService.currentUser.uid, text: comment, c_up: 0, c_down: 0, c_id: "C_" + authService.currentUser.uid + Date.now(), c_createdAt: Date.now() }],
+                up: 0,
+                down: 0,
+                upAndDown,
+                createdDate: Date.now()
+            }
+
+
             let postID = authService.currentUser.uid + Date.now()
             await fbFireStore.collection('post').doc(postID).set(data)
             alert('Post uploaded successfully')
-            setPopPost(false)
             window.location.reload()
         } catch (error) {
             console.log(error.message)

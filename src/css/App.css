@@ -155,3 +155,7 @@ header nav{
     padding: 15px;
     align-items: center;
 }
+
+.input-white-bg{
+    background-color: #ffffffb3;
+}

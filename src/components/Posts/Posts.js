@@ -36,10 +36,14 @@ const Posts = () => {
         }
     }
 
-    const OnDelete = (e) => {
+    const OnDelete = async (e) => {
         e.preventDefault();
+
         if (window.confirm("Really Delete?")) {
-            alert('Not implemented yet')
+            let postID = e.target.id;
+            const res = await fbFireStore.collection('post').doc(postID).delete();
+            console.log("Deleted Post")
+            window.location.reload();
         }
     }
 
@@ -62,7 +66,7 @@ const Posts = () => {
                     <div className="col-md-5">
                         <div className="" style={{ float: 'right' }}>
                             {
-                                checkAuthor && <button onClick={OnDelete} className="transparent-button" style={{ color: 'red' }}>Delete</button>
+                                checkAuthor && <button id={postID} onClick={OnDelete} className="transparent-button" style={{ color: 'red' }}>Delete</button>
                             }
                         </div>
                     </div>

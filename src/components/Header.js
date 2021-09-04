@@ -8,7 +8,7 @@ const Header = ({ isLoggedIn }) => {
     }
     return (
         <header className="row">
-            <h1 className="text-center mt-5">HUS</h1>
+            <h1 className="text-center mt-5"><Link to="/" id="logo" className="text-dark">HUS</Link></h1>
             <nav className="col-12 d-md-flex mt-3 justify-content-center">
                 <ul className="d-md-flex my-0">
                     <li className="mx-5 p-2" >National</li>

@@ -1,11 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Anton&family=MonteCarlo&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,500;1,700;1,900&display=swap');
 
+
 .monte{
     font-family: 'MonteCarlo' !important;
 }
 
 h1{
     font-family: 'Anton';
+}
+
+a#logo{
+    font-family: 'Anton';
+    text-decoration: none;
+    color:'black' !important;
+
 }
 
 *{
@@ -157,5 +165,5 @@ header nav{
 }
 
 .input-white-bg{
-    background-color: #ffffffb3;
+    background-color: #ffffff65;
 }

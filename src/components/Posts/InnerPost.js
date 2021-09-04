@@ -9,6 +9,7 @@ const InnerPost = () => {
     const postID = useParams();
     const [loaded, setLoaded] = useState(false)
     const [postData, setPostData] = useState(null)
+    const [bestComment, setBestComment] = useState(null)
 
     const getPostData = async () => {
         let requestData = await fbFireStore.collection('post').doc(postID.id).get()
@@ -16,6 +17,14 @@ const InnerPost = () => {
             let data = requestData.data()
             setPostData(data)
             setLoaded(true)
+
+
+            // 여기부터
+            // let _bestComment = await fbFireStore.collection('post').doc(postID.id).get()
+            // console.log(_bestComment.data())
+
+            // let _bestComment = await fbFireStore.collection('post').doc(postID.id).listCollections();
+            // console.log(_bestComment)
         } else {
             console.log("No Such Document in Firestore")
         }
@@ -46,7 +55,12 @@ const InnerPost = () => {
                             </div>
                         </div>
                         <div className="mt-5">
-                            <p style={{ fontWeight: 'bold', textAlign: 'center' }}>Best Comment</p>
+                            <h3>Best Comment</h3>
+                            {
+
+
+                            }
+                            {/* <p style={{ fontWeight: 'bold', textAlign: 'center' }}>Best Comment</p>
                             {
                                 postData.comment.map((element, index) => {
                                     // console.log(element)
@@ -69,7 +83,7 @@ const InnerPost = () => {
                                         </div>
                                     )
                                 })
-                            }
+                            } */}
                         </div>
                     </div>
                 </div>

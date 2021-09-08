@@ -53,38 +53,7 @@ const InnerPost = () => {
                                 <button className="mx-3 tr">-</button>
 
                             </div>
-                        </div>
-                        <div className="mt-5">
-                            <h3>Best Comment</h3>
-                            {
-
-
-                            }
-                            {/* <p style={{ fontWeight: 'bold', textAlign: 'center' }}>Best Comment</p>
-                            {
-                                postData.comment.map((element, index) => {
-                                    // console.log(element)
-                                    return (
-                                        <div key={index} className="comment-box d-flex">
-                                            <div className="col-md-8">
-                                                <p>Author: {element.c_author_name}</p>
-                                                <div>
-                                                    <p style={{ fontWeight: 'bold' }} >"{element.text}"</p>
-                                                </div>
-                                                <div>
-                                                    <p>up: {element.c_up} / down: {element.c_down}</p>
-                                                </div>
-
-                                            </div>
-                                            <div className="col-md-4">
-                                                <button onClick={() => alert('Not Implemented')}>UP</button>
-                                                <button onClick={() => alert('Not Implemented')}>DOWN</button>
-                                            </div>
-                                        </div>
-                                    )
-                                })
-                            } */}
-                        </div>
+                        </div>                    
                     </div>
                 </div>
                 <div className="col-md-10 mt-4 d-block mx-auto">

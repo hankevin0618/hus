@@ -4,6 +4,8 @@ import { authService, fbFireStore } from "../../myBase"
 const CommentSection = ({ postID }) => {
 
     const [dbComments, setDBComments] = useState(null)
+    const [commentUpdate, setCommentUpdate] = useState(false);
+
 
     const WriteComment = () => {
 
@@ -26,9 +28,11 @@ const CommentSection = ({ postID }) => {
 
             dbComments.push(data)
             let postLocation = await fbFireStore.collection('post').doc(postID.id)
+
             try {
-                await postLocation.update({ comment: dbComments })
+                await postLocation.update({ comment: dbComments })                
                 console.log("Comment Uploaded")
+                setCommentUpdate(!commentUpdate)
             } catch (error) {
                 console.log(error.message)
             }
@@ -40,6 +44,8 @@ const CommentSection = ({ postID }) => {
                 {authService.currentUser
                     ?
                     <>
+                    <button className="transparent-button" style={{color:'lightBlue'}}>Up</button>
+                    <button className="transparent-button" style={{color:'yellow'}}>down</button>
                         <h3>Write comment</h3>
                         <form onSubmit={onSubmit}>
                             <textarea id="writeComment" name="writeComment" required rows="4" cols="50" />
@@ -58,6 +64,33 @@ const CommentSection = ({ postID }) => {
         )
     }
 
+    const onDeleteClick = async (e) => {
+        e.preventDefault();
+        // Get Comments
+        let thisCommentID = e.target.parentElement.id;
+
+        try {
+            for (let index = 0; index < dbComments.length; index++) {
+                const element = dbComments[index];
+                if(element.c_id === thisCommentID){
+                    dbComments.splice(index, 1)
+                }
+            }
+
+            // update comment
+            if(window.confirm("Are you sure to delete?")){
+                await fbFireStore.collection('post').doc(postID.id).update({comment: dbComments})
+                setCommentUpdate(!commentUpdate)
+                console.log('Comment deleted')
+            }
+            
+        } catch (error) {
+            alert(error.message)
+        }
+        
+
+    }
+
     useEffect(() => {
         const getAllComments = async () => {
             let postLocation = await fbFireStore.collection('post').doc(postID.id)
@@ -67,31 +100,34 @@ const CommentSection = ({ postID }) => {
         }
         getAllComments();
 
-    }, [])
+    }, [commentUpdate])
 
 
     return (
         <div>
-            {dbComments && dbComments.map((element, index) => {
-                let date = new Date(element.c_createdAt).toLocaleDateString("en-US")
-                let checkAuthor = element.c_authorID.includes(authService.currentUser.uid)
-                return (
-                    <div key={index} id={element.c_id} className="comment-box my-3" >
-                        <p> {element.c_author_name} </p>
-                        <p> up: {element.c_up} </p>
-                        <p> down: {element.c_down} </p>
-                        <p>Comment: {element.text}</p>
-                        <p>Created At: {date} </p>
-                        <button className="transparent-button" onClick={() => alert("not implemented")}  >Up</button>
-                        <button className="transparent-button" onClick={() => alert("not implemented")}  >Down</button>
-                        {checkAuthor &&
-                            <button className="transparent-button" onClick={() => alert("not implemented")} style={{ color: 'red' }} >Delete</button>
-
-                        }
-
-                    </div>
-                )
-            })}
+                {dbComments && dbComments.map((element, index) => {
+                    let date = new Date(element.c_createdAt).toLocaleDateString("en-US")
+                    let checkAuthor;
+                    if(authService.currentUser){
+                        checkAuthor = element.c_authorID.includes(authService.currentUser.uid)
+                    }
+                    return (
+                        <div key={index} id={element.c_id} className="comment-box my-3" >
+                            <p> {element.c_author_name} </p>
+                            <p> up: {element.c_up} </p>
+                            <p> down: {element.c_down} </p>
+                            <p>Comment: {element.text}</p>
+                            <p>Created At: {date} </p>
+                            <button className="transparent-button" onClick={() => alert("not implemented")}  >Up</button>
+                            <button className="transparent-button" onClick={() => alert("not implemented")}  >Down</button>
+                            {checkAuthor &&
+                                <button className="transparent-button" style={{ color: 'red' }} onClick={onDeleteClick} >Delete</button>
+    
+                            }
+    
+                        </div>
+                    )
+                })}
             <WriteComment />
         </div >
     )

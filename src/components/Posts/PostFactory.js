@@ -95,7 +95,7 @@ const PostFactory = ({ setPopPost }) => {
             </div>
             <div className="col-12 mt-3">
                 <form onSubmit={onSubmit}>
-                    <input required type="text" onChange={onChange} name="url" placeholder="Drag & Drop the article"
+                    <input required type="text" required onChange={onChange} name="url" placeholder="Drag & Drop the article"
                         style={{ padding: '30px', borderRadius: '8px' }}
                     />
                     <div className="d-grid mt-3">

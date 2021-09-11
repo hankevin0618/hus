@@ -2,10 +2,16 @@ import { useEffect, useState } from "react";
 import { authService, fbFireStore } from "../../myBase";
 import { LinkPreview } from '@dhaiwat10/react-link-preview';
 import { Link } from "react-router-dom";
+import UpAndDown from "./UpAndDown";
 
 const Posts = () => {
     const [loading, setLoading] = useState(true)
     const [posts, setPosts] = useState(null)
+
+    let checkVoted = false;
+    let voterIndex;
+    let isUserAgreed = false;
+
     let postKey = 0;
     const getPosts = async () => {
         try {
@@ -21,7 +27,6 @@ const Posts = () => {
                     title: doc.data().title,
                     up: doc.data().up,
                     down: doc.data().down,
-                    upAndDown: doc.data().upAndDown,
                     url: doc.data().url
                 }
                 tempArray.push(data)
@@ -47,19 +52,65 @@ const Posts = () => {
         }
     }
 
-    const CreatePost = ({ author, comment, url, up, down, upAndDown, createdDate, authorID, postID, comment_author }) => {
+    const CreatePost = ({ author, comment, url, up, down, createdDate, authorID, postID, comment_author }) => {
+
+        const onRevoteClick = async(e) => {
+            e.preventDefault();
+            let res = await fbFireStore.collection('post').doc(postID).get();
+            
+            try {
+                let data = res.data();
+                let arr = [];
+                if(isUserAgreed){
+                    data.up.map((el, index) => {
+                        if(index !== voterIndex){
+                            arr.push(el)
+                        }
+                    })
+                    await fbFireStore.collection('post').doc(postID).update({
+                        up: arr
+                    })
+
+                }else{
+                    data.down.map((el, index) => {
+                        if(index !== voterIndex){
+                            arr.push(el)
+                        }
+                    })
+                    await fbFireStore.collection('post').doc(postID).update({
+                        down: arr
+                    })
+                }
+
+                window.location.reload();
+
+            } catch (error) {
+                console.log(error.message)
+            }
+        }
+        
         let date = new Date(createdDate).toLocaleDateString("en-US")
         let checkAuthor = false;
         if (authService.currentUser) {
             checkAuthor = Boolean(authorID === authService.currentUser.uid)
+            up.map((e,index) => {
+                if(Boolean(e === authService.currentUser.uid)){
+                    console.log("Found the user in UP & index at: " + index)
+                    checkVoted = true;
+                    isUserAgreed = true;
+                    voterIndex = index;
+                }
+            })
+            down.map((e,index) => {
+                if(Boolean(e === authService.currentUser.uid)){
+                    console.log("Found the user in DOWN & index at: " + index)
+                    checkVoted = true;
+                    voterIndex = index;
+                    isUserAgreed = false;
+                }
+            })
         }
-        // Add author's up or down
-        if (upAndDown === 'up') {
-            up++;
-        } else {
-            down++;
-        }
-
+    
         return (
             <div className="border p-3 my-3 post-card">
                 <div className="row">
@@ -73,7 +124,7 @@ const Posts = () => {
                 </div>
                 <div className="row">
                     <div className="border col-md-6" style={{ minHeight: '300px' }}>
-                        <LinkPreview url={url} />;
+                        <LinkPreview url={url} />
                     </div>
                     <div className="col-md-6">
                         <div style={{ fontSize: 'small' }}>
@@ -81,8 +132,28 @@ const Posts = () => {
                             <p>Date Created: {date}</p>
                         </div>
                         <div>
-                            <p>Agree: {up}</p>
-                            <p>Disagree: {down}</p>
+                            <div className="d-flex">
+                                <p>Agree: {up.length}</p>
+                                {
+                                    !checkVoted &&
+                                    <UpAndDown setLoading={setLoading} loading={loading} postID={postID} vote="up" />
+                                }
+                            </div>
+                            <div className="d-flex">
+                                <p>Disagree: {down.length}</p>
+                                {
+                                    !checkVoted &&
+                                    <UpAndDown setLoading={setLoading} loading={loading} postID={postID} vote="down" />
+
+                                    }
+                            </div>
+                            <div>
+                                {
+                                    checkVoted &&
+                                    <button id={postID} onClick={onRevoteClick}>Revote</button>
+
+                                }
+                            </div>
                         </div>
                         <p>Top comment</p>
                         <div className="comment-box">
@@ -115,30 +186,33 @@ const Posts = () => {
             {loading ? "Loading..."
 
                 :
-
                 posts.map((e) => {
-                    postKey++;
-
-                    e.comment.sort((a, b) => { return a.c_up - b.c_up })
-                    let topComment = e.comment[0].text
-                    let c_author_name = e.comment[0].c_author_name;
-                    return (
-                        <CreatePost
-                            key={postKey}
-                            id={e.postID}
-                            url={e.url}
-                            title={e.title}
-                            authorID={e.authorID}
-                            comment={topComment}
-                            comment_author={c_author_name}
-                            author={e.author}
-                            postID={e.postID}
-                            createdDate={e.createdDate}
-                            up={e.up}
-                            down={e.down}
-                            upAndDown={e.upAndDown}
-                        />
-                    )
+                    try {
+                        postKey++;
+    
+                        e.comment.sort((a, b) => { return a.c_up - b.c_up })
+                        let topComment = e.comment[0].text
+                        let c_author_name = e.comment[0].c_author_name;
+                        return (
+                            <CreatePost
+                                key={postKey}
+                                id={e.postID}
+                                url={e.url}
+                                title={e.title}
+                                authorID={e.authorID}
+                                comment={topComment}
+                                comment_author={c_author_name}
+                                author={e.author}
+                                postID={e.postID}
+                                createdDate={e.createdDate}
+                                up={e.up}
+                                down={e.down}
+                            />
+                        )
+                        
+                    } catch (error) {
+                        console.log("error" + error.message)
+                    }
                 })
 
             }

@@ -5,7 +5,7 @@ const CommentSection = ({ postID }) => {
 
     const [dbComments, setDBComments] = useState(null)
     const [commentUpdate, setCommentUpdate] = useState(false);
-
+    let checkFirstComment = false;
 
     const WriteComment = () => {
 
@@ -102,14 +102,21 @@ const CommentSection = ({ postID }) => {
 
     }, [commentUpdate])
 
+    
+
+   
 
     return (
         <div>
                 {dbComments && dbComments.map((element, index) => {
                     let date = new Date(element.c_createdAt).toLocaleDateString("en-US")
                     let checkAuthor;
+                    let firstComment = false;
                     if(authService.currentUser){
                         checkAuthor = element.c_authorID.includes(authService.currentUser.uid)
+                        if(index === 0){
+                            firstComment = true;
+                        }
                     }
                     return (
                         <div key={index} id={element.c_id} className="comment-box my-3" >
@@ -120,7 +127,7 @@ const CommentSection = ({ postID }) => {
                             <p>Created At: {date} </p>
                             <button className="transparent-button" onClick={() => alert("not implemented")}  >Up</button>
                             <button className="transparent-button" onClick={() => alert("not implemented")}  >Down</button>
-                            {checkAuthor &&
+                            {checkAuthor && !firstComment &&
                                 <button className="transparent-button" style={{ color: 'red' }} onClick={onDeleteClick} >Delete</button>
     
                             }

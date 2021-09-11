@@ -13,18 +13,11 @@ const InnerPost = () => {
 
     const getPostData = async () => {
         let requestData = await fbFireStore.collection('post').doc(postID.id).get()
-        if (requestData) {
+        
+        if (requestData.data()) {
             let data = requestData.data()
             setPostData(data)
             setLoaded(true)
-
-
-            // 여기부터
-            // let _bestComment = await fbFireStore.collection('post').doc(postID.id).get()
-            // console.log(_bestComment.data())
-
-            // let _bestComment = await fbFireStore.collection('post').doc(postID.id).listCollections();
-            // console.log(_bestComment)
         } else {
             console.log("No Such Document in Firestore")
         }
@@ -44,14 +37,13 @@ const InnerPost = () => {
                         </div>
                         <div>
                             <div className="d-flex">
-                                <p>Agree: {postData.up}</p>
+                                <p>Agree: {postData.up.length}</p>
                                 {/* Need to check whether this person already voted */}
                                 <button className="mx-3 tr">+</button>
                             </div>
                             <div className="d-flex">
-                                <p>Disagree: {postData.down}</p>
+                                <p>Disagree: {postData.down.length}</p>
                                 <button className="mx-3 tr">-</button>
-
                             </div>
                         </div>                    
                     </div>
